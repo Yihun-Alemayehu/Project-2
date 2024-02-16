@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
                 isDone: false),
           ),
         ),
-      child: const MaterialApp(
+      child: MaterialApp(
         home: HomeScreen(),
       ),
     );

@@ -11,10 +11,22 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       emit(TaskState(tasks: List.from(state.tasks)..add(event.task)));
     });
     on<UpdateTaskEvent>((event, emit) {
-      emit(TaskState(tasks: List.from(state.tasks)..add(event.task)));
+      final int index = state.tasks.indexOf(event.task);
+      List<Task> tasks = List.from(state.tasks)..remove(event.task);
+      event.task.isDone == false
+          ? tasks.insert(index, event.task.copyWith(isDone: true))
+          : tasks.insert(index, event.task.copyWith(isDone: false));
+      emit(TaskState(tasks: tasks));
     });
     on<DeleteTaskEvent>((event, emit) {
-      
+      final int index = state.tasks.indexOf(event.task);
+      List<Task> tasks = List.from(state.tasks);
+      tasks.removeAt(index);
+      emit(
+        TaskState(
+          tasks: List.from(state.tasks)..remove(event.task),
+        ),
+      );
     });
   }
 }
