@@ -5,6 +5,20 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Task manager'),
+        ),
+        body: Center(
+          child: Column(
+            children: [
+              Expanded(child: ListView.builder(
+                itemCount: ,
+                itemBuilder: (context, index) {
+                  
+                },))
+            ],
+          ),
+        ));
   }
 }

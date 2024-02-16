@@ -6,9 +6,15 @@ part 'task_event.dart';
 part 'task_state.dart';
 
 class TaskBloc extends Bloc<TaskEvent, TaskState> {
-  TaskBloc() : super(TaskInitial()) {
-    on<TaskEvent>((event, emit) {
-      // TODO: implement event handler
+  TaskBloc() : super(const TaskState()) {
+    on<AddTaskEvent>((event, emit) {
+      emit(TaskState(tasks: List.from(state.tasks)..add(event.task)));
+    });
+    on<UpdateTaskEvent>((event, emit) {
+      emit(TaskState(tasks: List.from(state.tasks)..add(event.task)));
+    });
+    on<DeleteTaskEvent>((event, emit) {
+      
     });
   }
 }
