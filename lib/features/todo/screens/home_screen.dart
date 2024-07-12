@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project_2/data/models/task_model.dart';
-import 'package:project_2/task_bloc/task_bloc.dart';
-import 'package:project_2/widgets/task_list.dart';
+import 'package:project_2/features/todo/models/task_model.dart';
+import 'package:project_2/features/todo/task_bloc/task_bloc.dart';
+import 'package:project_2/features/todo/widgets/task_list.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
