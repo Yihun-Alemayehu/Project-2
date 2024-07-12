@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:project_2/features/post/model/post.dart';
 import 'package:uuid/uuid.dart';
 
 class PostRepo {
@@ -11,13 +10,14 @@ class PostRepo {
   final FirebaseFirestore _cloud = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
-  Future<void> createImagePost({required Post post, required List<String> imageUrls}) async {
+  Future<void> createImagePost(
+      {required String content, required List<String> imageUrls}) async {
     try {
       final postId = await _cloud.collection('posts').add(
         {
           'id': '',
-          'type': post.type,
-          'content': post.content,
+          'type': 'post_with_image',
+          'content': content,
           'images': imageUrls,
           'likes': 0,
           'saves': 0,
@@ -36,18 +36,22 @@ class PostRepo {
   }
 
   // Add Image
-  Future<String> addImage(File image) async {
+  Future<List<String>> addImage({required List<File> images}) async {
     try {
       final uid = _auth.currentUser!.uid;
-      final String randomImageName = '${const Uuid().v4()}.jpg';
-      final storageRef = _storage.ref().child('$uid/posts/$randomImageName');
-      UploadTask uploadTask = storageRef.putFile(image);
-      TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
-      String imageUrl = await taskSnapshot.ref.getDownloadURL();
-      return imageUrl;
+      final List<String> imagesUrl = [];
+      for (File image in images) {
+        final String randomImageName = '${const Uuid().v4()}.jpg';
+        final storageRef = _storage.ref().child('$uid/posts/$randomImageName');
+        UploadTask uploadTask = storageRef.putFile(image);
+        TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
+        String imageUrl = await taskSnapshot.ref.getDownloadURL();
+        imagesUrl.add(imageUrl);
+      }
+      return imagesUrl;
     } catch (e) {
       print('Error while adding image ${e.toString()}');
-      return '';
+      return [];
     }
   }
 }

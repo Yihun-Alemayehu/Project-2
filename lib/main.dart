@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project_2/features/post/presentation/screens/add_post_screen.dart';
 import 'package:project_2/features/todo/models/task_model.dart';
 import 'package:project_2/features/todo/screens/home_screen.dart';
 import 'package:project_2/features/todo/task_bloc/task_bloc.dart';
@@ -28,8 +29,8 @@ class MyApp extends StatelessWidget {
                 isDone: false),
           ),
         ),
-      child: MaterialApp(
-        home: HomeScreen(),
+      child: const MaterialApp(
+        home: AddPostScreen(),
       ),
     );
   }
