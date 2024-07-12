@@ -81,7 +81,7 @@ class HomeScreen extends StatelessWidget {
               centerTitle: true,
               actions: [
                 IconButton(
-                  icon: Icon(Icons.add),
+                  icon: const Icon(Icons.add),
                   onPressed: () => _addTask(context),
                 ),
               ],
