@@ -9,6 +9,7 @@ class PostRepo {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _cloud = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
+  final uid = "e2Z1ytoUxtUAHL6vmrgR6Fbt9u13";
 
   Future<void> createImagePost(
       {required String content, required List<String> imageUrls}) async {
@@ -25,7 +26,7 @@ class PostRepo {
           'commentIDs': [],
           'createdAt': DateTime.now().toString().substring(0, 10),
           'updatedAt': DateTime.now().toString().substring(0, 10),
-          'userId': _auth.currentUser!.uid,
+          'userId': uid,
           'place': null,
         },
       );
@@ -38,7 +39,6 @@ class PostRepo {
   // Add Image
   Future<List<String>> addImage({required List<File> images}) async {
     try {
-      final uid = _auth.currentUser!.uid;
       final List<String> imagesUrl = [];
       for (File image in images) {
         final String randomImageName = '${const Uuid().v4()}.jpg';
