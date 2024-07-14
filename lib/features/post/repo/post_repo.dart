@@ -36,6 +36,56 @@ class PostRepo {
     }
   }
 
+  Future<void> createPanoramaPost(
+      {required String content, required List<String> imageUrls}) async {
+    try {
+      final postId = await _cloud.collection('posts').add(
+        {
+          'id': '',
+          'type': 'post_with_panorama',
+          'content': content,
+          'images': imageUrls,
+          'likes': 0,
+          'saves': 0,
+          'shares': 0,
+          'commentIDs': [],
+          'createdAt': DateTime.now().toString().substring(0, 10),
+          'updatedAt': DateTime.now().toString().substring(0, 10),
+          'userId': uid,
+          'place': null,
+        },
+      );
+      await _cloud.collection('posts').doc(postId.id).update({'id': postId.id});
+    } catch (e) {
+      print("An Error has occured while creating image post $e");
+    }
+  }
+
+  Future<void> createTextPost(
+      {required String content}) async {
+    try {
+      final postId = await _cloud.collection('posts').add(
+        {
+          'id': '',
+          'type': 'post_with_text',
+          'content': content,
+          'images': [],
+          'likes': 0,
+          'saves': 0,
+          'shares': 0,
+          'commentIDs': [],
+          'createdAt': DateTime.now().toString().substring(0, 10),
+          'updatedAt': DateTime.now().toString().substring(0, 10),
+          'userId': uid,
+          'place': null,
+        },
+      );
+      await _cloud.collection('posts').doc(postId.id).update({'id': postId.id});
+    } catch (e) {
+      print("An Error has occured while creating image post $e");
+    }
+  }
+
   // Add Image
   Future<List<String>> addImage({required List<File> images}) async {
     try {
