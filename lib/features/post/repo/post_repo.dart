@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:project_2/features/post/model/place.dart';
 import 'package:uuid/uuid.dart';
 
 class PostRepo {
@@ -78,6 +79,31 @@ class PostRepo {
           'updatedAt': DateTime.now().toString().substring(0, 10),
           'userId': uid,
           'place': null,
+        },
+      );
+      await _cloud.collection('posts').doc(postId.id).update({'id': postId.id});
+    } catch (e) {
+      print("An Error has occured while creating image post $e");
+    }
+  }
+
+  Future<void> createPlacePost(
+      {required String content, required Place place, required List<String> imageUrls}) async {
+    try {
+      final postId = await _cloud.collection('posts').add(
+        {
+          'id': '',
+          'type': 'post_with_place',
+          'content': content,
+          'images': imageUrls,
+          'likes': 0,
+          'saves': 0,
+          'shares': 0,
+          'commentIDs': [],
+          'createdAt': DateTime.now().toString().substring(0, 10),
+          'updatedAt': DateTime.now().toString().substring(0, 10),
+          'userId': uid,
+          'place': place,
         },
       );
       await _cloud.collection('posts').doc(postId.id).update({'id': postId.id});
